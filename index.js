@@ -50,6 +50,8 @@ async function render() {
   btnSearch.addEventListener("click", (event) => {
     searchFn(event, dataList, cardBox);
   });
+
+  // 검색어 입력 동시에 searchFn 작동
   const inputBox = document.querySelector(".search-box input");
   inputBox.addEventListener("input", (event) => {
     searchFn(event, dataList, cardBox);
