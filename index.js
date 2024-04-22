@@ -60,27 +60,24 @@ async function render() {
   const dataList = await fetchAPI();
   const cardBox = document.getElementById("card-box");
 
-  dataList.map((el) => {
-    makeList(el);
-  });
+  dataList.find((el) => makeList(el));
 
   const btnSearch = document.getElementById("btn-search");
-  btnSearch.addEventListener("click", (event) => {
-    searchFn(event, dataList, cardBox);
+  btnSearch.addEventListener("click", () => {
+    searchFn(dataList, cardBox);
   });
 
-  // 검색어 입력 동시에 searchFn 작동
-  const inputBox = document.querySelector(".search-box input");
-  inputBox.addEventListener("input", (event) => {
-    searchFn(event, dataList, cardBox);
-  });
+  const $input = document.querySelector(".search-box input");
+  $input.onkeyup = (event) => {
+    if (event.key !== "Enter") return;
+    searchFn(dataList, cardBox);
+  };
 }
 
 render();
 
 // 검색
-function searchFn(event, dataList, cardBox) {
-  event.preventDefault();
+function searchFn(dataList, cardBox) {
   const search = document.getElementById("search");
   const searchValue = search.value;
   cardBox.innerHTML = null;
@@ -90,16 +87,13 @@ function searchFn(event, dataList, cardBox) {
       el.title.toUpperCase().includes(searchValue.toUpperCase())
     );
   });
-  newDataList.map((el) => {
-    makeList(el);
-  });
+  newDataList.find((el) => makeList(el));
 }
 
 // theme
 const btnToggle = document.getElementById("toggle");
 const wrapper = document.querySelector(".wrapper");
 btnToggle.addEventListener("click", function (event) {
-  event.preventDefault();
   wrapper.classList.toggle("dark");
   if (wrapper.classList.contains("dark")) {
     event.target.innerText = "🌝";
@@ -111,33 +105,30 @@ btnToggle.addEventListener("click", function (event) {
 // detail modal
 async function detailModal(el) {
   const modal = wrapper.querySelector(".modal");
+  const modalDiv = wrapper.querySelector(".modal > div");
   modal.style.display = "flex";
-  if (modal.classList.contains("modal")) {
-    modal.innerHTML = `
-    <div>
+  modalDiv.innerHTML = `
       <div class="covered-img"></div>
       <ul class="genre">
       </ul>
       <h3>${el.title}</h3>
       <p>${el.overview}</p>
-    </div>
     `;
 
-    const bgImg = wrapper.querySelector(".covered-img");
-    bgImg.style.backgroundImage = `url("https://image.tmdb.org/t/p/original/${el.backdrop_path}")`;
+  const bgImg = wrapper.querySelector(".covered-img");
+  bgImg.style.backgroundImage = `url("https://image.tmdb.org/t/p/original/${el.backdrop_path}")`;
 
-    modal.addEventListener("click", function () {
-      modal.style.display = "none";
-    });
+  modal.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
 
-    //장르
-    const genreList = await genreApi();
-    for (let searchId of el.genre_ids) {
-      const searchGenre = genreList.filter((item) => item.id === searchId);
-      searchGenre.map((genre) => {
-        const genreBox = wrapper.querySelector(".genre");
-        genreBox.innerHTML += `<li>${genre.name}</li>`;
-      });
-    }
+  //장르
+  const genreList = await genreApi();
+  for (let searchId of el.genre_ids) {
+    const searchGenre = genreList.find((genre) => genre.id === searchId);
+    const genreBox = wrapper.querySelector(".genre");
+    const genreLI = document.createElement("li");
+    genreLI.textContent = searchGenre.name;
+    genreBox.appendChild(genreLI);
   }
 }
