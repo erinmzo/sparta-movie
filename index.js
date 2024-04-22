@@ -50,6 +50,10 @@ async function render() {
   btnSearch.addEventListener("click", (event) => {
     searchFn(event, dataList, cardBox);
   });
+  const inputBox = document.querySelector(".search-box input");
+  inputBox.addEventListener("input", (event) => {
+    searchFn(event, dataList, cardBox);
+  });
 }
 
 render();

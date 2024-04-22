@@ -81,19 +81,17 @@ section ul li span {
 }
 
 .back {
-  display: block;
-  position: fixed;
-  bottom: 50px;
-  right: 50px;
-  width: 48px;
-  height: 48px;
-  border-radius: 24px;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  border-radius: 12px;
   background-color: tomato;
   display: flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
   color: white;
+  font-size: 12px;
 }
 .back:hover {
   color: black;
