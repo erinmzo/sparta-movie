@@ -60,7 +60,7 @@ async function render() {
   const dataList = await fetchAPI();
   const cardBox = document.getElementById("card-box");
 
-  dataList.find((el) => makeList(el));
+  dataList.forEach((el) => makeList(el));
 
   const btnSearch = document.getElementById("btn-search");
   btnSearch.addEventListener("click", () => {
@@ -87,7 +87,7 @@ function searchFn(dataList, cardBox) {
       el.title.toUpperCase().includes(searchValue.toUpperCase())
     );
   });
-  newDataList.find((el) => makeList(el));
+  newDataList.forEach((el) => makeList(el));
 }
 
 // theme
@@ -125,7 +125,7 @@ async function detailModal(el) {
   //장르
   const genreList = await genreApi();
   for (let searchId of el.genre_ids) {
-    const searchGenre = genreList.find((genre) => genre.id === searchId);
+    const searchGenre = genreList.filter((genre) => genre.id === searchId);
     const genreBox = wrapper.querySelector(".genre");
     const genreLI = document.createElement("li");
     genreLI.textContent = searchGenre.name;
