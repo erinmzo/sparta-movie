@@ -1,13 +1,13 @@
-async function fetchAPI() {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMTk5ZmRhOWE3MjY4ZTAwMTE3MTVhMjcxYjMzMTAwNSIsInN1YiI6IjY2MTdhMzllN2Q0MWFhMDE3ZDAwNzkxNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.svBiDsUi6VuVUKtPq8DVrEd7G6rkepmITGwi_94lCk8",
-    },
-  };
+const options = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMTk5ZmRhOWE3MjY4ZTAwMTE3MTVhMjcxYjMzMTAwNSIsInN1YiI6IjY2MTdhMzllN2Q0MWFhMDE3ZDAwNzkxNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.svBiDsUi6VuVUKtPq8DVrEd7G6rkepmITGwi_94lCk8",
+  },
+};
 
+async function fetchAPI() {
   const json = await fetch(
     "https://api.themoviedb.org/3/movie/now_playing",
     options
@@ -17,14 +17,6 @@ async function fetchAPI() {
 }
 
 async function genreApi() {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMTk5ZmRhOWE3MjY4ZTAwMTE3MTVhMjcxYjMzMTAwNSIsInN1YiI6IjY2MTdhMzllN2Q0MWFhMDE3ZDAwNzkxNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.svBiDsUi6VuVUKtPq8DVrEd7G6rkepmITGwi_94lCk8",
-    },
-  };
   const json = await fetch(
     "https://api.themoviedb.org/3/genre/movie/list",
     options
@@ -84,7 +76,7 @@ function searchFn(dataList, cardBox) {
   const newDataList = dataList.filter((el) => {
     return (
       el.title.toLowerCase().includes(searchValue.toLowerCase()) ||
-      el.title.toUpperCase().includes(searchValue.toUpperCase())
+      el.overview.toLowerCase().includes(searchValue.toLowerCase())
     );
   });
   newDataList.forEach((el) => makeList(el));
