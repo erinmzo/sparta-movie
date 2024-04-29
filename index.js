@@ -41,7 +41,7 @@ function makeList(el) {
     `;
 
   // 알러트
-  list.addEventListener("click", function () {
+  list.addEventListener("click", () => {
     alert(`id: ${el.id}`);
     detailModal(el);
   });
@@ -84,7 +84,7 @@ function searchFn(dataList, cardBox) {
 // theme
 const btnToggle = document.getElementById("toggle");
 const wrapper = document.querySelector(".wrapper");
-btnToggle.addEventListener("click", function (event) {
+btnToggle.addEventListener("click", (event) => {
   wrapper.classList.toggle("dark");
   if (wrapper.classList.contains("dark")) {
     event.target.innerText = "🌝";
@@ -109,9 +109,7 @@ async function detailModal(el) {
   const bgImg = wrapper.querySelector(".covered-img");
   bgImg.style.backgroundImage = `url("https://image.tmdb.org/t/p/original/${el.backdrop_path}")`;
 
-  modal.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
+  modal.addEventListener("click", () => (modal.style.display = "none"));
 
   //장르
   const genreList = await genreApi();
