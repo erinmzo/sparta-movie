@@ -61,7 +61,7 @@ async function render() {
   });
 
   const $input = document.querySelector(".search-box input");
-  $input.onkeyup = () => {
+  $input.onkeyup = (event) => {
     if (event.key !== "Enter") return;
     searchFn(dataList, cardBox);
   };
