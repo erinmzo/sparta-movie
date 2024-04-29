@@ -8,21 +8,19 @@ const options = {
 };
 
 async function fetchAPI() {
-  const json = await fetch(
+  const { results } = await fetch(
     "https://api.themoviedb.org/3/movie/now_playing",
     options
   ).then((response) => response.json());
-  const dataList = json.results;
-  return dataList;
+  return results;
 }
 
 async function genreApi() {
-  const json = await fetch(
+  const { genres } = await fetch(
     "https://api.themoviedb.org/3/genre/movie/list",
     options
   ).then((response) => response.json());
-  const genreList = json.genres;
-  return genreList;
+  return genres;
 }
 
 function makeList(el) {
@@ -117,7 +115,7 @@ async function detailModal(el) {
     const searchGenre = genreList.filter((genre) => genre.id === searchId);
     const genreBox = wrapper.querySelector(".genre");
     const genreLI = document.createElement("li");
-    genreLI.textContent = searchGenre.name;
+    genreLI.textContent = searchGenre[0].name;
     genreBox.appendChild(genreLI);
   }
 }
