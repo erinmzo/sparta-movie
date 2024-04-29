@@ -59,12 +59,6 @@ async function render() {
     event.preventDefault();
     searchFn(dataList, cardBox);
   });
-
-  const $input = document.querySelector(".search-box input");
-  $input.onkeyup = (event) => {
-    if (event.key !== "Enter") return;
-    searchFn(dataList, cardBox);
-  };
 }
 
 render();
