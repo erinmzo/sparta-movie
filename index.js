@@ -54,13 +54,14 @@ async function render() {
 
   dataList.forEach((el) => makeList(el));
 
-  const btnSearch = document.getElementById("btn-search");
-  btnSearch.addEventListener("click", () => {
+  const searchBox = document.querySelector(".search-box");
+  searchBox.addEventListener("submit", (event) => {
+    event.preventDefault();
     searchFn(dataList, cardBox);
   });
 
   const $input = document.querySelector(".search-box input");
-  $input.onkeyup = (event) => {
+  $input.onkeyup = () => {
     if (event.key !== "Enter") return;
     searchFn(dataList, cardBox);
   };
@@ -72,14 +73,18 @@ render();
 function searchFn(dataList, cardBox) {
   const search = document.getElementById("search");
   const searchValue = search.value;
-  cardBox.innerHTML = null;
   const newDataList = dataList.filter((el) => {
     return (
       el.title.toLowerCase().includes(searchValue.toLowerCase()) ||
       el.overview.toLowerCase().includes(searchValue.toLowerCase())
     );
   });
-  newDataList.forEach((el) => makeList(el));
+  if (newDataList.length === 0) {
+    alert("검색결과가 없습니다.");
+  } else {
+    cardBox.innerHTML = null;
+    newDataList.forEach((el) => makeList(el));
+  }
 }
 
 // theme
