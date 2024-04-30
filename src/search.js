@@ -3,16 +3,18 @@ import { makeList } from "./movies.js";
 export function searchFn(dataList, cardBox) {
   const search = document.getElementById("search");
   const searchValue = search.value;
-  const newDataList = dataList.filter((el) => {
+  const filteredListBySearch = dataList.filter((el) => {
+    const title = el.title;
+    const overview = el.overview;
     return (
-      el.title.toLowerCase().includes(searchValue.toLowerCase()) ||
-      el.overview.toLowerCase().includes(searchValue.toLowerCase())
+      title.toLowerCase().includes(searchValue.toLowerCase()) ||
+      overview.toLowerCase().includes(searchValue.toLowerCase())
     );
   });
-  if (newDataList.length === 0) {
+  if (filteredListBySearch.length === 0) {
     alert("검색결과가 없습니다.");
   } else {
     cardBox.innerHTML = null;
-    newDataList.forEach((el) => makeList(el));
+    filteredListBySearch.forEach((el) => makeList(el));
   }
 }

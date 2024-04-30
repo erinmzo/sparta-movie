@@ -23,8 +23,6 @@ export async function detailModal(el) {
   for (let searchId of el.genre_ids) {
     const searchGenre = genreList.filter((genre) => genre.id === searchId);
     const genreBox = wrapper.querySelector(".genre");
-    const genreLI = document.createElement("li");
-    genreLI.textContent = searchGenre[0].name;
-    genreBox.appendChild(genreLI);
+    genreBox.innerHTML = `<li>${searchGenre[0].name}</li>`;
   }
 }
