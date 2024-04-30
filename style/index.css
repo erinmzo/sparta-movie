@@ -182,7 +182,7 @@ button#toggle {
   gap: 10px;
   padding: 20px 20px 0 20px;
 }
-.modal .genre li {
+.modal .genre span {
   background-color: tomato;
   color: white;
   font-size: 13px;

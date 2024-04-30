@@ -7,8 +7,7 @@ export async function detailModal(el) {
   modal.style.display = "flex";
   modalDiv.innerHTML = `
       <div class="covered-img"></div>
-      <ul class="genre">
-      </ul>
+      <div class="genre"></div>
       <h3>${el.title}</h3>
       <p>${el.overview}</p>
     `;
@@ -20,9 +19,13 @@ export async function detailModal(el) {
 
   //장르
   const genreList = await genreApi();
+  const genreBox = wrapper.querySelector(".genre");
+  const genre = document.createDocumentFragment();
   for (let searchId of el.genre_ids) {
-    const searchGenre = genreList.filter((genre) => genre.id === searchId);
-    const genreBox = wrapper.querySelector(".genre");
-    genreBox.innerHTML = `<li>${searchGenre[0].name}</li>`;
+    const searchGenre = genreList.find((genre) => genre.id === searchId);
+    const genreSpan = document.createElement("span");
+    genreSpan.textContent = searchGenre.name;
+    genre.append(genreSpan);
   }
+  genreBox.appendChild(genre);
 }
