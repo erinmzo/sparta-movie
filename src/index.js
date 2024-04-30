@@ -1,4 +1,3 @@
-import { detailModal } from "./detail.js";
 import { fetchAPI } from "./api.js";
 import { searchFn } from "./search.js";
 import { makeList } from "./movies.js";
