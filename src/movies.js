@@ -1,5 +1,3 @@
-import { detailModal } from "./detail.js";
-
 export function makeList(movie) {
   const cardBox = document.getElementById("card-box");
   const list = document.createElement("li");
@@ -15,9 +13,11 @@ export function makeList(movie) {
     `;
 
   cardBox.append(list);
-
+  const id = movie.id;
   list.addEventListener("click", () => {
-    alert(`id: ${movie.id}`);
-    detailModal(movie);
+    moveCommentPage(id);
   });
+}
+function moveCommentPage(name) {
+  location.href = "./detail.html?id=" + name;
 }

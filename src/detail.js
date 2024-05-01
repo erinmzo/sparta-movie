@@ -1,31 +1,27 @@
-import { genreApi } from "./api.js";
+import { detailApi, genreApi } from "./api.js";
 
-export async function detailModal(el) {
-  const wrapper = document.querySelector(".wrapper");
-  const modal = wrapper.querySelector(".modal");
-  const modalDiv = wrapper.querySelector(".modal > div");
-  modal.style.display = "flex";
-  modalDiv.innerHTML = `
-      <div class="covered-img"></div>
+export async function detailRender() {
+  const data = await detailApi();
+  const detailBox = document.querySelector(".detail-box");
+  const contents = `
+    <div class='img-box'><img src="https://image.tmdb.org/t/p/original/${data.backdrop_path}.jpg" alt="${data.original_title}"/></div>
+    <div class='info-box'>
+      <h1>${data.original_title}</h1>
+      <p>${data.overview}</p>
       <div class="genre"></div>
-      <h3>${el.title}</h3>
-      <p>${el.overview}</p>
-    `;
-
-  const bgImg = wrapper.querySelector(".covered-img");
-  bgImg.style.backgroundImage = `url("https://image.tmdb.org/t/p/original/${el.backdrop_path}")`;
-
-  modal.addEventListener("click", () => (modal.style.display = "none"));
-
+    </div>
+  `;
+  detailBox.innerHTML = contents;
   //장르
   const genreList = await genreApi();
-  const genreBox = wrapper.querySelector(".genre");
-  const genre = document.createDocumentFragment();
-  for (let searchId of el.genre_ids) {
-    const searchGenre = genreList.find((genre) => genre.id === searchId);
+  const genreBox = document.querySelector(".genre");
+  const genreFr = document.createDocumentFragment();
+  for (let searchId of data.genres) {
+    const searchGenre = genreList.find((genre) => genre.id === searchId.id);
     const genreSpan = document.createElement("span");
     genreSpan.textContent = searchGenre.name;
-    genre.append(genreSpan);
+    genreFr.append(genreSpan);
   }
-  genreBox.appendChild(genre);
+  genreBox.appendChild(genreFr);
 }
+detailRender();
