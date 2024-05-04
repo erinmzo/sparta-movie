@@ -10,7 +10,7 @@ export async function byNamedFn() {
     page = 1;
   }
   const data = await fetchAPI(page);
-  dataList = data.results;
+  const dataList = data.results;
   const byNamedList = [];
   cardBox.innerHTML = "";
   dataList.map((data) => {
@@ -28,7 +28,8 @@ export async function byNamedFn() {
 }
 
 export async function byRatingFn() {
-  const dataList = await fetchAPI(page);
+  const data = await fetchAPI(page);
+  const dataList = data.results;
   const byRatingList = [];
   cardBox.innerHTML = "";
   dataList.map((data) => {
