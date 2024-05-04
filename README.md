@@ -1,5 +1,5 @@
 ## <h1 style="font-size:24px;" >영화 검색 사이트</h1>
-
+[사이트 바로가기](https://erinmzo.github.io/sparta-movie/)
 <br>
 <br>
 <br>
