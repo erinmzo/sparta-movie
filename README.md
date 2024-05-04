@@ -1,7 +1,3 @@
-# 🗡️ Sparta Coding Club nbcamp
-
-<br>
-
 ## <h1 style="font-size:24px;" >영화 검색 사이트</h1>
 
 <br>
