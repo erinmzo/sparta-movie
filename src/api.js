@@ -1,11 +1,11 @@
 import { options } from "./option.js";
 
-export async function fetchAPI() {
-  const { results } = await fetch(
-    "https://api.themoviedb.org/3/movie/now_playing",
+export async function fetchAPI(page) {
+  const data = await fetch(
+    `https://api.themoviedb.org/3/movie/now_playing?page=${page}`,
     options
   ).then((response) => response.json());
-  return results;
+  return data;
 }
 
 export async function genreApi() {

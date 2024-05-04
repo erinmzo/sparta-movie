@@ -2,11 +2,15 @@ import { fetchAPI } from "./api.js";
 import { searchFn } from "./search.js";
 import { makeList } from "./movies.js";
 import { themeFn } from "./theme.js";
+import { paginationRender } from "./pagination.js";
+import { byNamedFn, byRatingFn } from "./sort.js";
 
-async function render() {
-  const dataList = await fetchAPI();
+const firstPage = 1;
+export async function render(clickPageNumberpage) {
+  const data = await fetchAPI(clickPageNumberpage);
+  const dataList = data.results;
   const cardBox = document.getElementById("card-box");
-
+  cardBox.innerHTML = "";
   dataList.forEach((movie) => {
     makeList(movie);
   });
@@ -19,42 +23,17 @@ async function render() {
 
   const btnByNamed = document.querySelector(".by-named");
   btnByNamed.addEventListener("click", () => {
-    const byNamedList = [];
-    cardBox.innerHTML = "";
-    dataList.map((data) => {
-      byNamedList.push(data);
-      byNamedList.sort((a, b) => {
-        if (a.title < b.title) return -1;
-        if (a.title > b.title) return 1;
-        return 0;
-      });
-      return byNamedList;
-    });
-    byNamedList.forEach((movie) => {
-      makeList(movie);
-    });
+    byNamedFn();
   });
 
   const btnByRating = document.querySelector(".by-rating");
   btnByRating.addEventListener("click", () => {
-    const byRatingList = [];
-    cardBox.innerHTML = "";
-    dataList.map((data) => {
-      byRatingList.push(data);
-      byRatingList.sort((a, b) => {
-        if (a.vote_average > b.vote_average) return -1;
-        if (a.vote_average < b.vote_average) return 1;
-        return 0;
-      });
-      return byRatingList;
-    });
-    byRatingList.forEach((movie) => {
-      makeList(movie);
-    });
+    byRatingFn();
   });
 }
 
-render();
+render(firstPage);
+paginationRender(firstPage);
 
 const btnToggle = document.getElementById("toggle");
 btnToggle.addEventListener("click", themeFn);

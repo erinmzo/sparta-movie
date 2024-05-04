@@ -4,14 +4,20 @@ export async function detailRender() {
   const data = await detailApi();
   const detailBox = document.querySelector(".detail-box");
   const contents = `
-    <div class='img-box'><img src="https://image.tmdb.org/t/p/original/${data.backdrop_path}.jpg" alt="${data.original_title}"/></div>
+    <div class='img-box'></div>
     <div class='info-box'>
-      <h1>${data.original_title}</h1>
-      <p>${data.overview}</p>
-      <div class="genre"></div>
+      <div class="container">
+        <h1>${data.original_title}</h1>
+        <p>${data.overview}</p>
+        <div class="genre"></div>
+      </div>
     </div>
   `;
+
   detailBox.innerHTML = contents;
+  const imgBox = document.querySelector(".img-box");
+  imgBox.style.backgroundImage = `linear-gradient( transparent, #000 100%), url('https://image.tmdb.org/t/p/original/${data.backdrop_path}.jpg')`;
+
   //장르
   const genreList = await genreApi();
   const genreBox = document.querySelector(".genre");

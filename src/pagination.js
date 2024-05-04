@@ -1,14 +1,15 @@
 import { fetchAPI } from "./api.js";
-import { pageRender } from "./index.js";
+import { render } from "./index.js";
+import { makeList } from "./movies.js";
 
-const pagination = document.querySelector(".pagenation");
+const pagination = document.querySelector(".pagination");
 export function paginationRender(pageNumber) {
   for (let i = 1; i <= 10; i++) {
     const div = document.createElement("div");
     div.innerHTML = `<button class="page-btn" data-page-number="${i}">${i}</button>`;
     pagination.appendChild(div);
   }
-  if (pageNumber > 1 || pageNumber <= 10) {
+  if (pageNumber >= 1 && pageNumber <= 10) {
     pageBtnFn();
     nextBtnFn();
   } else {
@@ -17,11 +18,11 @@ export function paginationRender(pageNumber) {
 }
 
 function pageBtnFn() {
-  const btnPage = document.querySelectorAll(".pagenation .page-btn");
+  const btnPage = document.querySelectorAll(".pagination .page-btn");
   btnPage.forEach((button) => {
     button.addEventListener("click", (event) => {
       const clickPageNumber = event.target.dataset.pageNumber;
-      pageRender(clickPageNumber);
+      render(clickPageNumber);
       setUrl(clickPageNumber);
     });
   });
@@ -39,8 +40,8 @@ function nextBtnFn() {
   next.addEventListener("click", (event) => {
     const lastBtn = event.target.previousSibling.firstChild;
     const lastBtnPageNumber = lastBtn.dataset.pageNumber;
-    //console.log(lastBtnPageNumber);
     makeNextPagination(+lastBtnPageNumber);
+    render(+lastBtnPageNumber + 1);
   });
 
   pagination.append(next);
@@ -52,31 +53,33 @@ function prevBtnFn() {
   prev.addEventListener("click", (event) => {
     const firstBtn = event.target.nextSibling.firstChild;
     const firstBtnPageNumber = firstBtn.dataset.pageNumber;
-    console.log(firstBtnPageNumber);
     makePrevPagination(+firstBtnPageNumber);
+    console.log(+firstBtnPageNumber + 1);
+    render(+firstBtnPageNumber - 1);
   });
   pagination.prepend(prev);
 }
 
 async function makeNextPagination(lastBtnPageNumber) {
-  const dataList = await fetchAPI(lastBtnPageNumber);
-  console.log();
+  const data = await fetchAPI(lastBtnPageNumber);
+  const totalPages = data.total_pages;
   pagination.innerHTML = "";
-  for (let i = lastBtnPageNumber - 9; i <= lastBtnPageNumber; i++) {
-    const div = document.createElement("div");
-    div.innerHTML = `<button class="page-btn" data-page-number="${i + 10}">${
-      i + 10
-    }</button>`;
-    pagination.appendChild(div);
-  }
-  if (lastBtnPageNumber < dataList.total_pages - 10) {
-    pageBtnFn();
+  if (totalPages > lastBtnPageNumber) {
+    for (let i = lastBtnPageNumber + 1; i <= lastBtnPageNumber + 9; i++) {
+      const div = document.createElement("div");
+      div.innerHTML = `<button class="page-btn" data-page-number="${i}">${i}</button>`;
+      pagination.appendChild(div);
+    }
     nextBtnFn();
-    prevBtnFn();
   } else {
-    pageBtnFn();
-    prevBtnFn();
+    for (let i = lastBtnPageNumber + 1; i < totalPages; i++) {
+      const div = document.createElement("div");
+      div.innerHTML = `<button class="page-btn" data-page-number="${i}">${i}</button>`;
+      pagination.appendChild(div);
+    }
   }
+  pageBtnFn();
+  prevBtnFn();
 }
 
 function makePrevPagination(firstBtnPageNumber) {

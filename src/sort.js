@@ -4,14 +4,15 @@ import { makeList } from "./movies.js";
 const cardBox = document.getElementById("card-box");
 
 const urlParams = new URLSearchParams(window.location.search);
-const page = urlParams.get("page");
-
+let page = urlParams.get("page");
 export async function byNamedFn() {
+  if (page === null) {
+    page = 1;
+  }
   const dataList = await fetchAPI(page);
-  console.log(dataList);
   const byNamedList = [];
   cardBox.innerHTML = "";
-  dataList.results.map((data) => {
+  dataList.map((data) => {
     byNamedList.push(data);
     byNamedList.sort((a, b) => {
       if (a.title < b.title) return -1;
@@ -27,10 +28,9 @@ export async function byNamedFn() {
 
 export async function byRatingFn() {
   const dataList = await fetchAPI(page);
-  console.log(dataList);
   const byRatingList = [];
   cardBox.innerHTML = "";
-  dataList.results.map((data) => {
+  dataList.map((data) => {
     byRatingList.push(data);
     byRatingList.sort((a, b) => {
       if (a.vote_average > b.vote_average) return -1;

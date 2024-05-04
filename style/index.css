@@ -206,3 +206,23 @@ button#toggle {
   font-size: 18px;
   line-height: 1.5;
 }
+
+.pagination {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pagination button {
+  border: 1px solid #333;
+  background-color: white;
+  color: #333;
+}
+.pagination button:hover,
+.pagination button.active {
+  cursor: pointer;
+  border: 1px solid tomato;
+  background-color: white;
+  color: tomato;
+}

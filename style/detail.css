@@ -1,0 +1,35 @@
+#detail {
+  background-color: black;
+  color: white;
+}
+#detail .container {
+  width: 1080px;
+  margin: 0 auto;
+  position: relative;
+}
+#detail .img-box {
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+}
+h1 {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  font-size: 60px;
+}
+p {
+  font-size: 1.5em;
+  line-height: 1.5em;
+}
+.genre {
+  padding: 100px 0;
+  display: flex;
+  gap: 20px;
+}
+.genre span {
+  background-color: tomato;
+  padding: 7px 10px;
+  border-radius: 30px;
+  color: white;
+}
