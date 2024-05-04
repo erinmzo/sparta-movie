@@ -9,7 +9,8 @@ export async function byNamedFn() {
   if (page === null) {
     page = 1;
   }
-  const dataList = await fetchAPI(page);
+  const data = await fetchAPI(page);
+  dataList = data.results;
   const byNamedList = [];
   cardBox.innerHTML = "";
   dataList.map((data) => {
